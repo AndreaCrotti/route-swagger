@@ -66,7 +66,8 @@
   (sw.doc/annotate
     {:summary    "Get all resources"
      :parameters {:query-params {:q s/Str}}
-     :responses  {200      {:body {:status s/Str}}
+     :responses  {200      {:schema {:status s/Str}
+                            :description "The available resources."}
                   :default {:body    {:result [s/Str]}
                             :headers {(req "Location") s/Str}}}}
     (i/interceptor
@@ -119,7 +120,8 @@
                  :summary     "Get all resources"
                  :parameters  {:query  {:q s/Str}
                                :header {(req "auth") s/Str}}
-                 :responses   {200      {:schema {:status s/Str}}
+                 :responses   {200      {:schema {:status s/Str}
+                                         :description "The available resources."}
                                :default {:schema  {:result [s/Str]}
                                          :headers {(req "Location") s/Str}}}
                  :operationId "get-handler"}}

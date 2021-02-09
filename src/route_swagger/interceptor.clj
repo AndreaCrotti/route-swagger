@@ -4,7 +4,8 @@
             [ring.util.response :refer [response resource-response redirect]]
             [ring.swagger.swagger2 :as spec]
             [ring.util.http-status :as status]
-            [cheshire.core :as json]))
+            [cheshire.core :as json]
+            [clojure.set :as set]))
 
 (defn- default-json-converter [swagger-object]
   (spec/swagger-json
@@ -60,10 +61,16 @@
   supplied. The default implementation throws if a validation error occours."
   ([] (validate-response (schema/make-validate-response)))
   ([f]
-   {:name  ::validate-response
-    :leave (fn [{:keys [response route] :as context}]
-             (let [schemas (->> route doc/annotation :responses)]
-               (if-let [schema (or (get schemas (:status response))
-                                   (get schemas :default))]
-                 (update context :response (partial f schema))
-                 context)))}))
+   {:name ::validate-response
+    :leave
+    (fn [{:keys [response route] :as context}]
+      (let [schemas (->> route route-swagger.doc/annotation :responses)]
+        (if-let [resp-obj (or (get schemas (:status response))
+                              (get schemas :default))]
+          ;; Convert an OpenAPI 2.0 response object into a valid schema
+          (let [schema (-> resp-obj
+                           (set/rename-keys {:schema :body})
+                           (select-keys [:body :headers]))]
+            (update context :response (partial f schema)))
+          context)))}))
+
