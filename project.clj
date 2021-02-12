@@ -1,4 +1,4 @@
-(defproject oliyh/route-swagger "0.1.6-SNAPSHOT"
+(defproject oliyh/route-swagger "0.1.6"
   :dependencies [[metosin/ring-swagger "0.26.2" :exclusions [frankiesardo/linked]]
                  [ikitommi/linked "1.3.1-alpha1"]
                  [metosin/ring-swagger-ui "3.36.0"]]
