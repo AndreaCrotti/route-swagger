@@ -1,7 +1,7 @@
-(defproject oliyh/route-swagger "0.1.7-SNAPSHOT"
+(defproject andreacrotti/route-swagger "0.1.7"
   :dependencies [[metosin/ring-swagger "0.26.2" :exclusions [frankiesardo/linked]]
                  [ikitommi/linked "1.3.1-alpha1"]
-                 [metosin/ring-swagger-ui "3.36.0"]]
+                 [andreacrotti/ring-swagger-ui "3.46.0"]]
   :source-paths ["src"]
   :profiles {:provided {:dependencies [[org.clojure/clojure "1.10.1"]]}
              :dev {:dependencies [[io.pedestal/pedestal.service "0.5.8"]
